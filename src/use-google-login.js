@@ -113,11 +113,14 @@ const useGoogleLogin = ({
         } else {
           GoogleAuth.then(
             () => {
+              if (unmounted) {
+                return
+              }
               if (isSignedIn && GoogleAuth.isSignedIn.get()) {
                 setLoaded(true)
                 onAutoLoadFinished(true)
                 handleSigninSuccess(GoogleAuth.currentUser.get())
-              } else if (!unmounted) {
+              } else {
                 setLoaded(true)
                 onAutoLoadFinished(false)
               }
